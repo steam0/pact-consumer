@@ -1,2 +1,5 @@
 server:
-  port: 8888
+  port: 8889
+
+provider:
+  url: http://localhost:8888

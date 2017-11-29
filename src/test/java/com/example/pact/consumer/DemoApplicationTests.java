@@ -1,7 +1,9 @@
-package com.example.jwt.demo;
+package com.example.pact.consumer;
 
+import com.example.pact.consumer.provider.client.ProviderClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -9,8 +11,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class DemoApplicationTests {
 
+	@Autowired
+	private ProviderClient providerClient;
+
 	@Test
 	public void contextLoads() {
 	}
 
+	@Test
+	public void loadUuid() {
+		//providerClient.getUuid("test");
+	}
 }

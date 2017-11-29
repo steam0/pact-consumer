@@ -3,6 +3,7 @@
 /out/
 /build/
 !gradle/wrapper/grad.-le-wrapper.jar
+/target
 
 ### STS ###
 .apt_generated

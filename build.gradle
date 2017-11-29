@@ -2,18 +2,21 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.7.RELEASE'
 		springfoxVersion = '2.7.0'
+		pactVersion = '3.5.10'
 	}
 	repositories {
 		mavenCentral()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'au.com.dius.pact'
 
 group = 'com.example.jwt'
 version = '0.0.1-SNAPSHOT'
@@ -23,15 +26,51 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	compile("org.projectlombok:lombok:1.16.16")
 	compile('org.springframework.boot:spring-boot-starter-web')
 
-	// Swagger
-	compile("io.springfox:springfox-swagger2:${springfoxVersion}")
-	compile("io.springfox:springfox-swagger-ui:${springfoxVersion}")
+	// Pact
+	compile("au.com.dius:pact-jvm-consumer-java8_2.12:${pactVersion}")
+	compile("au.com.dius:pact-jvm-pact-broker:${pactVersion}")
+	compile("au.com.dius:pact-jvm-provider-junit_2.12:${pactVersion}")
+	compile("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
+	testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:${pactVersion}")
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	runtime('com.h2database:h2')
+}
+
+pact {
+
+	publish {
+		pactDirectory = 'target/pacts'
+		pactBrokerUrl = 'http://localhost:8080'
+	}
+
+}
+
+pact {
+
+	serviceProviders {
+
+		// You can define as many as you need, but each must have a unique name
+		provider1 {
+			// All the provider properties are optional, and have sensible defaults (shown below)
+			protocol = 'http'
+			host = 'localhost'
+			port = 8888
+			path = '/'
+
+			// Again, you can define as many consumers for each provider as you need, but each must have a unique name
+			hasPactWith('pact-consumer') {
+
+				// currently supports a file path using file() or a URL using url()
+				pactSource = file('target/pacts/pact-consumer-pact-provider.json')
+
+			}
+		}
+
+	}
+
 }
