@@ -1,8 +1,9 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.7.RELEASE'
+		springBootVersion = '1.5.8.RELEASE'
 		springfoxVersion = '2.7.0'
 		pactVersion = '3.5.10'
+		pactDirectory = "$buildDir/pacts"
 	}
 	repositories {
 		mavenCentral()
@@ -32,45 +33,23 @@ dependencies {
 
 	// Pact
 	compile("au.com.dius:pact-jvm-consumer-java8_2.12:${pactVersion}")
-	compile("au.com.dius:pact-jvm-pact-broker:${pactVersion}")
-	compile("au.com.dius:pact-jvm-provider-junit_2.12:${pactVersion}")
-	compile("au.com.dius:pact-jvm-provider-gradle_2.12:${pactVersion}")
-	testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:${pactVersion}")
 
+	// Tests
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	runtime('com.h2database:h2')
 }
 
-pact {
+// Set where to put pact files
+test {
+	systemProperties['pact.rootDir'] = pactDirectory
+}
 
+// Publish pact files
+pact {
 	publish {
-		pactDirectory = 'target/pacts'
+		pactDirectory = pactDirectory
 		pactBrokerUrl = 'http://localhost:8080'
 	}
-
 }
 
-pact {
-
-	serviceProviders {
-
-		// You can define as many as you need, but each must have a unique name
-		provider1 {
-			// All the provider properties are optional, and have sensible defaults (shown below)
-			protocol = 'http'
-			host = 'localhost'
-			port = 8888
-			path = '/'
-
-			// Again, you can define as many consumers for each provider as you need, but each must have a unique name
-			hasPactWith('pact-consumer') {
-
-				// currently supports a file path using file() or a URL using url()
-				pactSource = file('target/pacts/pact-consumer-pact-provider.json')
-
-			}
-		}
-
-	}
-
-}
+// Push pacts to broker
+build.finalizedBy(pactPublish)
