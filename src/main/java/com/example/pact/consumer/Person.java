@@ -1,4 +1,4 @@
-package com.example.pact.consumer.provider.client.models;
+package com.example.pact.consumer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Person {
+    private Integer id;
     private String name;
     private String ssn;
 }

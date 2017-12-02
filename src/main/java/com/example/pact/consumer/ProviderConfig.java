@@ -1,4 +1,4 @@
-package com.example.pact.consumer.provider.config;
+package com.example.pact.consumer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

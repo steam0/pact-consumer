@@ -1,11 +1,14 @@
 package com.example.pact.consumer;
 
-import com.example.pact.consumer.provider.client.ProviderClient;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,7 +22,14 @@ public class ProviderIntegrationTests {
 	}
 
 	@Test
-	public void loadUuid() {
-		//providerClient.getUuid("test");
+	@Ignore
+	public void createNewPerson() {
+		Person person = Person.builder().name("Harald Hårfagre").ssn("01039012345").build();
+
+		Person response = providerClient.createPerson(person);
+
+		assertEquals(response.getName(), person.getName());
+		assertEquals(response.getSsn(), person.getSsn());
+		assertTrue(response.getId() != null);
 	}
 }
