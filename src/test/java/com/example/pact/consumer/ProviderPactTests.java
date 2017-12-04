@@ -2,6 +2,7 @@ package com.example.pact.consumer;
 
 import au.com.dius.pact.consumer.*;
 
+import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.model.MockProviderConfig;
 import au.com.dius.pact.model.RequestResponsePact;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -48,11 +49,11 @@ public class ProviderPactTests {
                 .willRespondWith()
                 .headers(headers)
                 .status(HttpStatus.CREATED.value())
-                .body("{\n" +
-                        "  \"id\": 1,\n" +
-                        "  \"name\": \"Roger Antonsen\",\n" +
-                        "  \"ssn\": \"01039012345\"\n" +
-                        "}")
+                .body(new PactDslJsonBody()
+                        .stringValue("name", "Roger Antonsen") // Strict value
+                        .stringValue("ssn", "01039012345") // Strict value
+                        .integerType("id", 0) // Value not important, but strict type
+                )
                 .toPact();
 
         MockProviderConfig config = MockProviderConfig.createDefault();
