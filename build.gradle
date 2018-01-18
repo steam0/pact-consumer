@@ -2,7 +2,7 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.8.RELEASE'
 		springfoxVersion = '2.7.0'
-		pactVersion = '3.5.10'
+		pactVersion = '3.5.11'
 		pactDirectory = "$buildDir/pacts"
 	}
 	repositories {
@@ -47,7 +47,7 @@ test {
 pact {
 	publish {
 		pactDirectory = pactDirectory
-		pactBrokerUrl = 'http://localhost:8080'
+		pactBrokerUrl = 'http://localhost:3000'
 	}
 }
 

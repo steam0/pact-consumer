@@ -25,4 +25,12 @@ public class ProviderClient {
         log.info("Created new Person(id={}, name={}, ssn={})", response.getId(), response.getName(), response.getSsn());
         return response;
     }
+
+    public Person getPerson(String ssn) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = providerConfig.getUrl()+"/person/"+ssn;
+        Person response = restTemplate.getForObject(url, Person.class);
+        log.info("Got Person(id={}, name={}, ssn={})", response.getId(), response.getName(), response.getSsn());
+        return response;
+    }
 }
