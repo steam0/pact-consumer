@@ -38,18 +38,18 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-//// Set where to put pact files
-//test {
-//	systemProperties['pact.rootDir'] = pactDirectory
-//}
-//
-//// Publish pact files
-//pact {
-//	publish {
-//		pactDirectory = pactDirectory
-//		pactBrokerUrl = 'http://localhost:3000'
-//	}
-//}
-//
-//// Push pacts to broker
-//build.finalizedBy(pactPublish)
+// Set where to put pact files
+test {
+	systemProperties['pact.rootDir'] = pactDirectory
+}
+
+// Publish pact files
+pact {
+	publish {
+		pactDirectory = pactDirectory
+		pactBrokerUrl = 'http://localhost:3000'
+	}
+}
+
+// Push pacts to broker
+build.finalizedBy(pactPublish)
