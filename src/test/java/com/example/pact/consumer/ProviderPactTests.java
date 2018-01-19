@@ -1,13 +1,13 @@
 package com.example.pact.consumer;
 
 import au.com.dius.pact.consumer.ConsumerPactBuilder;
-import au.com.dius.pact.consumer.MockProvider;
 import au.com.dius.pact.consumer.PactVerificationResult;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
 import au.com.dius.pact.model.MockProviderConfig;
 import au.com.dius.pact.model.RequestResponsePact;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,12 +27,17 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class ProviderPactTests {
 
+    ObjectMapper objectMapper;
+
+    @Before
+    public void createObjectMapper() {
+        objectMapper = new ObjectMapper();
+    }
+
     @Test
     public void createPerson() throws JsonProcessingException {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         Person person = Person.builder().name("Roger Antonsen").ssn("71039012345").build();
 
@@ -60,10 +65,9 @@ public class ProviderPactTests {
 
             Person personResponse = providerClient.createPerson(person);
 
-            assertEquals(personResponse.getName(), person.getName());
-            assertEquals(personResponse.getSsn(), person.getSsn());
+            assertEquals(person.getName(), personResponse.getName());
+            assertEquals(person.getSsn(), personResponse.getSsn());
             assertTrue(personResponse.getId() != null);
-
         });
 
         assertEquals(PactVerificationResult.Ok.INSTANCE, result);
