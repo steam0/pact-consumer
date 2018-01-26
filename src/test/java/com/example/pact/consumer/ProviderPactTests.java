@@ -27,7 +27,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest
 public class ProviderPactTests {
 
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Before
     public void createObjectMapper() {
