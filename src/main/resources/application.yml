@@ -2,4 +2,4 @@ server:
   port: 8889
 
 provider:
-  url: http://localhost:8888
+  url: http://localhost:8081

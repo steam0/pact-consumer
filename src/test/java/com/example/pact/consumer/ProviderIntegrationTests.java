@@ -28,6 +28,8 @@ public class ProviderIntegrationTests {
 
 		Person response = providerClient.createPerson(person);
 
+		System.out.println(response);
+
 		assertEquals(response.getName(), person.getName());
 		assertEquals(response.getSsn(), person.getSsn());
 		assertTrue(response.getId() != null);

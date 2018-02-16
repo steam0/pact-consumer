@@ -20,7 +20,7 @@ public class ProviderClient {
 
     public Person createPerson(Person person) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = providerConfig.getUrl()+"/person";
+        String url = providerConfig.getUrl()+"/person/v1";
         Person response = restTemplate.postForObject(url, person, Person.class);
         log.info("Created new Person(id={}, name={}, ssn={})", response.getId(), response.getName(), response.getSsn());
         return response;

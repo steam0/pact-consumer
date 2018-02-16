@@ -44,7 +44,7 @@ public class ProviderPactTests {
         RequestResponsePact pact = ConsumerPactBuilder
                 .consumer("pact-consumer").hasPactWith("pact-provider")
                 .uponReceiving("Create new person request")
-                    .path("/person")
+                    .path("/person/v1")
                     .method("POST")
                     .headers(headers)
                     .body(objectMapper.writeValueAsString(person))
