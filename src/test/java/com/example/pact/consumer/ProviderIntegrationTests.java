@@ -24,14 +24,14 @@ public class ProviderIntegrationTests {
 	@Test
 	@Ignore
 	public void createNewPerson() {
-		Person person = Person.builder().name("Harald Hårfagre").ssn("01039012345").build();
+		Person person = Person.builder().name("Harald Hårfagre").socialSecurityNumber("01039012345").build();
 
 		Person response = providerClient.createPerson(person);
 
 		System.out.println(response);
 
 		assertEquals(response.getName(), person.getName());
-		assertEquals(response.getSsn(), person.getSsn());
+		assertEquals(response.getSocialSecurityNumber(), person.getSocialSecurityNumber());
 		assertTrue(response.getId() != null);
 	}
 }
