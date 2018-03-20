@@ -39,7 +39,10 @@ public class ProviderPactTests {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", MediaType.APPLICATION_JSON_UTF8_VALUE);
 
-        Person person = Person.builder().name("Roger Antonsen").ssn("71039012345").build();
+        Person person = Person.builder()
+                .name("Roger Antonsen")
+                .ssn("71039012345")
+                .build();
 
         RequestResponsePact pact = ConsumerPactBuilder
                 .consumer("pact-consumer").hasPactWith("pact-provider")
@@ -52,8 +55,8 @@ public class ProviderPactTests {
                     .headers(headers)
                     .status(HttpStatus.CREATED.value())
                     .body(new PactDslJsonBody()
-                            .stringValue("name", "Roger Antonsen")
-                            .stringValue("ssn", "71039012345")
+                            .stringValue("name", person.getName())
+                            .stringValue("ssn", person.getSsn())
                             .integerType("id", 0)
                     )
                 .toPact();
