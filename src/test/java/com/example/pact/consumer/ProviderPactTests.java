@@ -38,18 +38,18 @@ public class ProviderPactTests {
                 .consumer("pact-consumer")
                 .hasPactWith("pact-provider")
                 .uponReceiving("Create new person")
-                .path("/person")
-                .method("POST")
-                .headers(headers)
-                .body(objectMapper.writeValueAsString(person))
+                    .path("/person")
+                    .method("POST")
+                    .headers(headers)
+                    .body(objectMapper.writeValueAsString(person))
                 .willRespondWith()
-                .headers(headers)
-                .status(HttpStatus.CREATED.value())
-                .body(new PactDslJsonBody()
+                    .headers(headers)
+                    .status(HttpStatus.CREATED.value())
+                    .body(new PactDslJsonBody()
                         .stringValue("name", "Roger Antonsen") // Strict value
                         .stringValue("ssn", "71039012345") // Strict value
                         .integerType("id", 0) // Value not important, but strict type
-                )
+                    )
                 .toPact();
 
         MockProviderConfig config = MockProviderConfig.createDefault();

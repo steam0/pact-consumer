@@ -2,7 +2,7 @@ buildscript {
 	ext {
 		springBootVersion = '1.5.8.RELEASE'
 		springfoxVersion = '2.7.0'
-		pactVersion = '3.5.11'
+		pactVersion = '3.5.16'
 		pactDirectory = "$buildDir/pacts"
 	}
 	repositories {
@@ -39,6 +39,7 @@ dependencies {
 }
 
 // Set where to put pact files
+pactDirectory = "$buildDir/pacts"
 test {
 	systemProperties['pact.rootDir'] = pactDirectory
 }
